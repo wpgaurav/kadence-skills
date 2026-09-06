@@ -1,333 +1,159 @@
-# Kadence CTA Section Skill
+# Kadence Call-to-Action Sections
 
-**Activation**: Creating call-to-action sections, conversion blocks, sign-up prompts, download banners with Kadence Blocks.
+Conversion bands you drop between content sections or at the end of a page.
+All examples validate 100% against Kadence Blocks 3.7.10.
 
-## CTA Section Patterns
+## Pattern 1 — Centered CTA band
 
-### Pattern 1: Simple Centered CTA
-
-Clean, focused call-to-action with headline and button.
-
-```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta001","columns":1,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["xl","lg","xl","lg"],"tabletPadding":["lg","md","lg","md"],"mobilePadding":["md","sm","md","sm"],"bgColor":"palette1"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta001">
-<div class="kt-row-column-wrap kt-has-1-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta001"} -->
-<div class="wp-block-kadence-column kadence-column-cta001"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta001","align":"center","color":"#ffffff","htmlTag":"h2","fontSize":["36","32","26"],"lineHeight":["1.25","1.3","1.35"],"fontWeight":"700","margin":["","","16",""]} -->
-<h2 class="kt-adv-heading-cta001 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta001">Ready to Get Started?</h2>
-<!-- /wp:kadence/advancedheading -->
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta002","align":"center","color":"rgba(255,255,255,0.9)","htmlTag":"p","fontSize":["18","17","16"],"lineHeight":["1.6","1.6","1.5"],"maxWidth":600,"margin":["","","28",""]} -->
-<p class="kt-adv-heading-cta002 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta002">Join thousands of satisfied customers and transform your workflow today.</p>
-<!-- /wp:kadence/advancedheading -->
-
-<!-- wp:kadence/advancedbtn {"uniqueID":"kt-btn-cta001","hAlign":"center"} -->
-<div class="wp-block-kadence-advancedbtn kt-btn-wrap-cta001">
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta001a","text":"Start Free Trial","sizePreset":"large","color":"palette1","background":"#ffffff","backgroundHover":"#f1f5f9","borderRadius":[6,6,6,6],"padding":["16","32","16","32"]} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta001a"><a class="kt-button button kt-btn-cta001a-action kt-btn-size-large kt-btn-style-basic" href="#">Start Free Trial</a></div>
-<!-- /wp:kadence/singlebtn -->
-</div>
-<!-- /wp:kadence/advancedbtn -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-```
-
-### Pattern 2: Split CTA with Image
-
-Two-column CTA with visual element.
+The default. Full-bleed color, one headline, one line of copy, one button.
 
 ```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta002","columns":2,"colLayout":"left-golden","inheritMaxWidth":true,"align":"full","padding":["xl","lg","xl","lg"],"tabletPadding":["lg","md","lg","md"],"mobilePadding":["md","sm","md","sm"],"bgColor":"palette3","columnGutter":"wider","verticalAlignment":"middle"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta002">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-wider kt-v-gutter-default kt-row-valign-middle">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta002a"} -->
-<div class="wp-block-kadence-column kadence-column-cta002a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta003","color":"#ffffff","htmlTag":"h2","fontSize":["40","34","28"],"lineHeight":["1.2","1.25","1.3"],"fontWeight":"700","margin":["","","16",""]} -->
-<h2 class="kt-adv-heading-cta003 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta003">Take Your Business to the Next Level</h2>
+<!-- wp:kadence/rowlayout {"uniqueID":"cta1_row","columns":1,"colLayout":"equal","align":"full","inheritMaxWidth":true,"topPadding":72,"bottomPadding":72,"topPaddingM":48,"bottomPaddingM":48,"bgColor":"palette1","kbVersion":2} -->
+<!-- wp:kadence/column {"uniqueID":"cta1_col","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columncta1_col"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedheading {"uniqueID":"cta1_h","htmlTag":"h2","align":"center","color":"#ffffff","size":36,"mobileSize":27,"fontWeight":"700","margin":[0,0,12,0]} -->
+<h2 class="kt-adv-headingcta1_h wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta1_h">Start with one report. Keep the whole workspace.</h2>
 <!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta004","color":"rgba(255,255,255,0.85)","htmlTag":"p","fontSize":["18","17","16"],"lineHeight":["1.6","1.6","1.5"],"margin":["","","24",""]} -->
-<p class="kt-adv-heading-cta004 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta004">Get access to premium features and dedicated support. No commitment, cancel anytime.</p>
+<!-- wp:kadence/advancedheading {"uniqueID":"cta1_p","htmlTag":"p","align":"center","color":"#e8eefc","size":18,"maxWidth":[600,"",""],"maxWidthType":"px","margin":[0,"auto",28,"auto"]} -->
+<p class="kt-adv-headingcta1_p wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta1_p">Free for 14 days, no card. Export everything on the way out if it is not for you.</p>
 <!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/advancedbtn {"uniqueID":"kt-btn-cta002","hAlign":"left","gap":[12,12,10]} -->
-<div class="wp-block-kadence-advancedbtn kt-btn-wrap-cta002">
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta002a","text":"Get Started Free","sizePreset":"large","color":"palette3","background":"#ffffff","backgroundHover":"#f8fafc","borderRadius":[6,6,6,6]} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta002a"><a class="kt-button button kt-btn-cta002a-action kt-btn-size-large kt-btn-style-basic" href="#">Get Started Free</a></div>
-<!-- /wp:kadence/singlebtn -->
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta002b","text":"Talk to Sales","sizePreset":"large","style":"outline","color":"#ffffff","borderColor":"rgba(255,255,255,0.5)","colorHover":"#ffffff","borderHover":"#ffffff","borderRadius":[6,6,6,6]} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta002b"><a class="kt-button button kt-btn-cta002b-action kt-btn-size-large kt-btn-style-outline" href="#">Talk to Sales</a></div>
-<!-- /wp:kadence/singlebtn -->
-</div>
-<!-- /wp:kadence/advancedbtn -->
-
-</div></div>
+<!-- wp:kadence/advancedbtn {"uniqueID":"cta1_btns","hAlign":"center"} -->
+<div class="wp-block-kadence-advancedbtn kb-buttons-wrap kb-btnscta1_btns"><!-- wp:kadence/singlebtn {"uniqueID":"cta1_b1","text":"Create a workspace","link":"/signup/","sizePreset":"large","inheritStyles":"fill","background":"#ffffff","color":"palette1"} /--></div>
+<!-- /wp:kadence/advancedbtn --></div></div>
 <!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-col-cta002b"} -->
-<div class="wp-block-kadence-column kadence-column-cta002b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/image {"uniqueID":"kt-image-cta001","borderRadius":[12,12,12,12],"boxShadow":[true,"#000000",0.2,0,20,40,0,false]} -->
-<figure class="wp-block-kadence-image kb-image-cta001"><img src="https://placehold.co/480x360/e2e8f0/64748b?text=CTA+Image" alt="CTA visual" class="kb-img wp-image-"/></figure>
-<!-- /wp:kadence/image -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
 <!-- /wp:kadence/rowlayout -->
 ```
 
-### Pattern 3: Gradient CTA Banner
+**Payoff:** one row, no nesting — this is the cheapest section in the whole
+system to duplicate and re-word.
 
-Eye-catching gradient background CTA.
+On a colored band, set text colors explicitly with hex. `palette` slots assume
+the page background and will hand you dark-on-dark.
+
+## Pattern 2 — Split CTA, copy left and button right
+
+Reads as a bar rather than a billboard. Good mid-page, where a full billboard
+would interrupt.
 
 ```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta003","columns":1,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["xxl","lg","xxl","lg"],"tabletPadding":["xl","md","xl","md"],"mobilePadding":["lg","sm","lg","sm"],"gradient":"linear-gradient(135deg, palette1 0%, palette2 100%)"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta003">
-<div class="kt-row-column-wrap kt-has-1-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta003"} -->
-<div class="wp-block-kadence-column kadence-column-cta003"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta005","align":"center","color":"#ffffff","htmlTag":"h2","fontSize":["44","36","28"],"lineHeight":["1.2","1.25","1.3"],"fontWeight":"700","margin":["","","20",""]} -->
-<h2 class="kt-adv-heading-cta005 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta005">Start Building Amazing Things</h2>
+<!-- wp:kadence/rowlayout {"uniqueID":"cta2_row","columns":2,"colLayout":"left-golden","align":"full","inheritMaxWidth":true,"topPadding":44,"bottomPadding":44,"topPaddingM":32,"bottomPaddingM":32,"bgColor":"palette8","verticalAlignment":"middle","kbVersion":2} -->
+<!-- wp:kadence/column {"uniqueID":"cta2_c1","verticalAlignment":"middle","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columncta2_c1"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedheading {"uniqueID":"cta2_h","htmlTag":"h2","size":26,"mobileSize":22,"fontWeight":"700","margin":[0,0,6,0]} -->
+<h2 class="kt-adv-headingcta2_h wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta2_h">Still comparing options?</h2>
 <!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta006","align":"center","color":"rgba(255,255,255,0.9)","htmlTag":"p","fontSize":["20","18","16"],"lineHeight":["1.6","1.6","1.5"],"maxWidth":650,"margin":["","","32",""]} -->
-<p class="kt-adv-heading-cta006 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta006">Everything you need to succeed is just one click away. No credit card required to start.</p>
-<!-- /wp:kadence/advancedheading -->
-
-<!-- wp:kadence/advancedbtn {"uniqueID":"kt-btn-cta003","hAlign":"center","gap":[16,16,12]} -->
-<div class="wp-block-kadence-advancedbtn kt-btn-wrap-cta003">
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta003a","text":"Create Free Account","sizePreset":"large","color":"palette1","background":"#ffffff","backgroundHover":"#f8fafc","borderRadius":[50,50,50,50],"padding":["18","36","18","36"],"boxShadow":[true,"#000000",0.15,0,8,20,0,false]} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta003a"><a class="kt-button button kt-btn-cta003a-action kt-btn-size-large kt-btn-style-basic" href="#">Create Free Account</a></div>
-<!-- /wp:kadence/singlebtn -->
-</div>
-<!-- /wp:kadence/advancedbtn -->
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta007","align":"center","color":"rgba(255,255,255,0.7)","htmlTag":"p","fontSize":["14","14","13"],"margin":["20","","",""]} -->
-<p class="kt-adv-heading-cta007 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta007">Free 14-day trial • No credit card needed • Cancel anytime</p>
-<!-- /wp:kadence/advancedheading -->
-
-</div></div>
+<!-- wp:kadence/advancedheading {"uniqueID":"cta2_p","htmlTag":"p","color":"palette4","size":16,"margin":[0,0,0,0]} -->
+<p class="kt-adv-headingcta2_p wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta2_p">We keep a side-by-side against the four tools people usually shortlist with us.</p>
+<!-- /wp:kadence/advancedheading --></div></div>
 <!-- /wp:kadence/column -->
 
-</div>
-</div>
+<!-- wp:kadence/column {"uniqueID":"cta2_c2","verticalAlignment":"middle","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columncta2_c2"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedbtn {"uniqueID":"cta2_btns","hAlign":"right","mhAlign":"center"} -->
+<div class="wp-block-kadence-advancedbtn kb-buttons-wrap kb-btnscta2_btns"><!-- wp:kadence/singlebtn {"uniqueID":"cta2_b1","text":"See the comparison","link":"/compare/","sizePreset":"standard","inheritStyles":"outline","color":"palette1"} /--></div>
+<!-- /wp:kadence/advancedbtn --></div></div>
+<!-- /wp:kadence/column -->
 <!-- /wp:kadence/rowlayout -->
 ```
 
-### Pattern 4: Newsletter Signup CTA
+**Payoff:** `colLayout:"left-golden"` gives the copy roughly two thirds and the
+button one third without any width attributes.
 
-Email capture focused CTA with inline form styling.
+`mhAlign` centers the button on mobile, where a right-hugging button looks
+broken. The breakpoint prefixes on `advancedbtn` are `t` for tablet and `m` for
+mobile, giving `hAlign` / `thAlign` / `mhAlign` — not the `…M` suffix that
+`rowlayout` uses for `topPaddingM`. Two blocks, two conventions.
+
+Useful `colLayout` values for two-column rows: `equal`, `left-golden`,
+`right-golden`, `left-half`, `right-half`.
+
+## Pattern 3 — CTA with a reassurance list
+
+For higher-friction offers, where the button alone is not enough.
 
 ```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta004","columns":1,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["lg","lg","lg","lg"],"tabletPadding":["md","md","md","md"],"mobilePadding":["sm","sm","sm","sm"],"bgColor":"palette8","borderRadius":[16,16,16,16],"maxWidth":900,"margin":["xl","auto","xl","auto"]} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-cta004">
-<div class="kt-row-column-wrap kt-has-1-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta004"} -->
-<div class="wp-block-kadence-column kadence-column-cta004"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta004a","columns":2,"colLayout":"left-golden","verticalAlignment":"middle","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-cta004a">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default kt-row-valign-middle">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta004a"} -->
-<div class="wp-block-kadence-column kadence-column-cta004a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta008","color":"palette3","htmlTag":"h3","fontSize":["24","22","20"],"fontWeight":"700","margin":["","","8",""]} -->
-<h3 class="kt-adv-heading-cta008 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta008">Stay in the Loop</h3>
+<!-- wp:kadence/rowlayout {"uniqueID":"cta3_row","columns":1,"colLayout":"equal","align":"full","inheritMaxWidth":true,"topPadding":72,"bottomPadding":72,"topPaddingM":48,"bottomPaddingM":48,"bgColor":"palette9","kbVersion":2} -->
+<!-- wp:kadence/column {"uniqueID":"cta3_col","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columncta3_col"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedheading {"uniqueID":"cta3_h","htmlTag":"h2","align":"center","size":34,"mobileSize":26,"fontWeight":"700","margin":[0,0,22,0]} -->
+<h2 class="kt-adv-headingcta3_h wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta3_h">Move your first dataset this week</h2>
 <!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta009","color":"palette4","htmlTag":"p","fontSize":["16","15","14"],"lineHeight":["1.5","1.5","1.5"]} -->
-<p class="kt-adv-heading-cta009 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta009">Get weekly tips, insights, and exclusive content delivered to your inbox.</p>
-<!-- /wp:kadence/advancedheading -->
+<!-- wp:kadence/iconlist {"uniqueID":"cta3_list","columns":3,"mobileColumns":1,"icon":"fe_check","listGap":10} -->
+<div class="wp-block-kadence-iconlist kt-svg-icon-list-items kt-svg-icon-list-itemscta3_list kt-svg-icon-list-columns-3 alignnone kt-mobile-svg-icon-list-columns-1"><ul class="kt-svg-icon-list"><!-- wp:kadence/listitem {"uniqueID":"cta3_i1","text":"Migration done for you"} -->
+<li class="wp-block-kadence-listitem kt-svg-icon-list-item-wrap kt-svg-icon-list-item-cta3_i1"><span data-name="USE_PARENT_DEFAULT_ICON" data-stroke="USE_PARENT_DEFAULT_WIDTH" data-class="kt-svg-icon-list-single" class="kadence-dynamic-icon"></span><span class="kt-svg-icon-list-text">Migration done for you</span></li>
+<!-- /wp:kadence/listitem -->
 
-</div></div>
+<!-- wp:kadence/listitem {"uniqueID":"cta3_i2","text":"Cancel any time"} -->
+<li class="wp-block-kadence-listitem kt-svg-icon-list-item-wrap kt-svg-icon-list-item-cta3_i2"><span data-name="USE_PARENT_DEFAULT_ICON" data-stroke="USE_PARENT_DEFAULT_WIDTH" data-class="kt-svg-icon-list-single" class="kadence-dynamic-icon"></span><span class="kt-svg-icon-list-text">Cancel any time</span></li>
+<!-- /wp:kadence/listitem -->
+
+<!-- wp:kadence/listitem {"uniqueID":"cta3_i3","text":"Your data stays yours"} -->
+<li class="wp-block-kadence-listitem kt-svg-icon-list-item-wrap kt-svg-icon-list-item-cta3_i3"><span data-name="USE_PARENT_DEFAULT_ICON" data-stroke="USE_PARENT_DEFAULT_WIDTH" data-class="kt-svg-icon-list-single" class="kadence-dynamic-icon"></span><span class="kt-svg-icon-list-text">Your data stays yours</span></li>
+<!-- /wp:kadence/listitem --></ul></div>
+<!-- /wp:kadence/iconlist -->
+
+<!-- wp:kadence/spacer {"uniqueID":"cta3_sp","spacerHeight":24,"dividerEnable":false} -->
+<div class="wp-block-kadence-spacer aligncenter kt-block-spacer-cta3_sp"><div class="kt-block-spacer kt-block-spacer-halign-center"></div></div>
+<!-- /wp:kadence/spacer -->
+
+<!-- wp:kadence/advancedbtn {"uniqueID":"cta3_btns","hAlign":"center"} -->
+<div class="wp-block-kadence-advancedbtn kb-buttons-wrap kb-btnscta3_btns"><!-- wp:kadence/singlebtn {"uniqueID":"cta3_b1","text":"Book a migration slot","link":"/migrate/","sizePreset":"large","inheritStyles":"fill","background":"palette1","color":"palette9"} /--></div>
+<!-- /wp:kadence/advancedbtn --></div></div>
 <!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-col-cta004b"} -->
-<div class="wp-block-kadence-column kadence-column-cta004b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedbtn {"uniqueID":"kt-btn-cta004","hAlign":"right","thAlign":"left","mhAlign":"center"} -->
-<div class="wp-block-kadence-advancedbtn kt-btn-wrap-cta004">
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta004a","text":"Subscribe Now","sizePreset":"medium","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"icon":"fe_mail","iconSide":"left"} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta004a"><a class="kt-button button kt-btn-cta004a-action kt-btn-size-medium kt-btn-style-basic kt-btn-has-icon kt-btn-icon-side-left" href="#"><span class="kt-btn-icon kt-btn-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>Subscribe Now</a></div>
-<!-- /wp:kadence/singlebtn -->
-</div>
-<!-- /wp:kadence/advancedbtn -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
 <!-- /wp:kadence/rowlayout -->
 ```
 
-### Pattern 5: Stats + CTA Combo
+**Payoff:** the spacer with `dividerEnable:false` gives clean vertical rhythm
+without an empty paragraph block.
 
-CTA with social proof numbers.
+A spacer with the divider **on** (the default) emits an extra
+`<hr class="kt-divider"/>` inside. Turning it off means removing that `<hr>`
+from the HTML too — the two have to agree.
+
+## Pattern 4 — Dark banner with background image
+
+Highest-contrast CTA. Use once per page at most.
 
 ```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta005","columns":1,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["xl","lg","xl","lg"],"bgColor":"palette9"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta005">
-<div class="kt-row-column-wrap kt-has-1-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta005"} -->
-<div class="wp-block-kadence-column kadence-column-cta005"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta010","align":"center","color":"palette3","htmlTag":"h2","fontSize":["38","32","26"],"lineHeight":["1.25","1.3","1.35"],"fontWeight":"700","margin":["","","16",""]} -->
-<h2 class="kt-adv-heading-cta010 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta010">Trusted by Industry Leaders</h2>
+<!-- wp:kadence/rowlayout {"uniqueID":"cta4_row","columns":1,"colLayout":"equal","align":"full","inheritMaxWidth":true,"topPadding":96,"bottomPadding":96,"topPaddingM":60,"bottomPaddingM":60,"bgImg":"https://example.com/wp-content/uploads/factory.jpg","bgImgID":0,"bgImgSize":"cover","bgImgPosition":"center center","overlay":"#07101f","overlayOpacity":70,"kbVersion":2} -->
+<!-- wp:kadence/column {"uniqueID":"cta4_col","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columncta4_col"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedheading {"uniqueID":"cta4_h","htmlTag":"h2","align":"center","color":"#ffffff","size":40,"mobileSize":29,"fontWeight":"700","margin":[0,0,14,0]} -->
+<h2 class="kt-adv-headingcta4_h wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta4_h">Talk to someone who has done this migration</h2>
 <!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta011","align":"center","color":"palette4","htmlTag":"p","fontSize":["18","17","16"],"lineHeight":["1.6","1.6","1.5"],"maxWidth":600,"margin":["","","40",""]} -->
-<p class="kt-adv-heading-cta011 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta011">Join the companies that are already seeing incredible results.</p>
+<!-- wp:kadence/advancedheading {"uniqueID":"cta4_p","htmlTag":"p","align":"center","color":"#d7dfec","size":18,"maxWidth":[640,"",""],"maxWidthType":"px","margin":[0,"auto",30,"auto"]} -->
+<p class="kt-adv-headingcta4_p wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingcta4_p">Thirty minutes, an engineer not a rep, and a written plan afterwards whether or not you buy.</p>
 <!-- /wp:kadence/advancedheading -->
 
-</div></div>
+<!-- wp:kadence/advancedbtn {"uniqueID":"cta4_btns","hAlign":"center"} -->
+<div class="wp-block-kadence-advancedbtn kb-buttons-wrap kb-btnscta4_btns"><!-- wp:kadence/singlebtn {"uniqueID":"cta4_b1","text":"Book the call","link":"/call/","sizePreset":"large","inheritStyles":"fill","background":"#ffffff","color":"#07101f"} /-->
+
+<!-- wp:kadence/singlebtn {"uniqueID":"cta4_b2","text":"Read the migration guide","link":"/docs/migrate/","sizePreset":"large","inheritStyles":"outline","color":"#ffffff"} /--></div>
+<!-- /wp:kadence/advancedbtn --></div></div>
 <!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- Stats Row -->
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta006","columns":4,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["","lg","lg","lg"],"tabletPadding":["","md","md","md"],"bgColor":"palette9","tabletLayout":"two-equal","mobileLayout":"row"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta006">
-<div class="kt-row-column-wrap kt-has-4-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta006a","textAlign":"center"} -->
-<div class="wp-block-kadence-column kadence-column-cta006a has-text-align-center"><div class="kt-inside-inner-col">
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta012","align":"center","color":"palette1","htmlTag":"p","fontSize":["48","40","32"],"fontWeight":"700","margin":["","","4",""]} -->
-<p class="kt-adv-heading-cta012 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta012">10K+</p>
-<!-- /wp:kadence/advancedheading -->
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta013","align":"center","color":"palette4","htmlTag":"p","fontSize":["15","14","14"]} -->
-<p class="kt-adv-heading-cta013 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta013">Active Users</p>
-<!-- /wp:kadence/advancedheading -->
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-col-cta006b","textAlign":"center"} -->
-<div class="wp-block-kadence-column kadence-column-cta006b has-text-align-center"><div class="kt-inside-inner-col">
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta014","align":"center","color":"palette1","htmlTag":"p","fontSize":["48","40","32"],"fontWeight":"700","margin":["","","4",""]} -->
-<p class="kt-adv-heading-cta014 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta014">99%</p>
-<!-- /wp:kadence/advancedheading -->
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta015","align":"center","color":"palette4","htmlTag":"p","fontSize":["15","14","14"]} -->
-<p class="kt-adv-heading-cta015 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta015">Satisfaction</p>
-<!-- /wp:kadence/advancedheading -->
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":3,"uniqueID":"kt-col-cta006c","textAlign":"center"} -->
-<div class="wp-block-kadence-column kadence-column-cta006c has-text-align-center"><div class="kt-inside-inner-col">
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta016","align":"center","color":"palette1","htmlTag":"p","fontSize":["48","40","32"],"fontWeight":"700","margin":["","","4",""]} -->
-<p class="kt-adv-heading-cta016 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta016">50M+</p>
-<!-- /wp:kadence/advancedheading -->
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta017","align":"center","color":"palette4","htmlTag":"p","fontSize":["15","14","14"]} -->
-<p class="kt-adv-heading-cta017 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta017">Tasks Completed</p>
-<!-- /wp:kadence/advancedheading -->
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":4,"uniqueID":"kt-col-cta006d","textAlign":"center"} -->
-<div class="wp-block-kadence-column kadence-column-cta006d has-text-align-center"><div class="kt-inside-inner-col">
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta018","align":"center","color":"palette1","htmlTag":"p","fontSize":["48","40","32"],"fontWeight":"700","margin":["","","4",""]} -->
-<p class="kt-adv-heading-cta018 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta018">24/7</p>
-<!-- /wp:kadence/advancedheading -->
-<!-- wp:kadence/advancedheading {"uniqueID":"kt-adv-heading-cta019","align":"center","color":"palette4","htmlTag":"p","fontSize":["15","14","14"]} -->
-<p class="kt-adv-heading-cta019 wp-block-kadence-advancedheading" data-kb-block="kb-adv-heading-cta019">Support</p>
-<!-- /wp:kadence/advancedheading -->
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- CTA Button Row -->
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-cta007","columns":1,"colLayout":"equal","inheritMaxWidth":true,"align":"full","padding":["lg","lg","xl","lg"],"bgColor":"palette9"} -->
-<div class="wp-block-kadence-rowlayout alignfull kt-row-layout-inner kt-layout-id-cta007">
-<div class="kt-row-column-wrap kt-has-1-columns">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-cta007"} -->
-<div class="wp-block-kadence-column kadence-column-cta007"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advancedbtn {"uniqueID":"kt-btn-cta005","hAlign":"center"} -->
-<div class="wp-block-kadence-advancedbtn kt-btn-wrap-cta005">
-<!-- wp:kadence/singlebtn {"uniqueID":"kt-btn-cta005a","text":"Join Them Today","sizePreset":"large","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"padding":["16","40","16","40"],"icon":"fe_arrowRight","iconSide":"right"} -->
-<div class="wp-block-kadence-singlebtn kt-btn-wrap-cta005a"><a class="kt-button button kt-btn-cta005a-action kt-btn-size-large kt-btn-style-basic kt-btn-has-icon kt-btn-icon-side-right" href="#">Join Them Today<span class="kt-btn-icon kt-btn-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a></div>
-<!-- /wp:kadence/singlebtn -->
-</div>
-<!-- /wp:kadence/advancedbtn -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
 <!-- /wp:kadence/rowlayout -->
 ```
 
-## CTA Button Styles
+**Payoff:** `overlayOpacity:70` is one number to tune when the photo turns out
+busier than the mockup.
 
-### Primary (Solid)
-```json
-{
-  "style": "basic",
-  "color": "#ffffff",
-  "background": "palette1",
-  "backgroundHover": "palette2"
-}
-```
+## Choosing
 
-### Secondary (Outline)
-```json
-{
-  "style": "outline",
-  "color": "palette1",
-  "borderColor": "palette1",
-  "colorHover": "#ffffff",
-  "backgroundHover": "palette1"
-}
-```
+| Position on the page | Pattern |
+|---|---|
+| End of a landing page | 1 or 4 |
+| Between two content sections | 2 |
+| After a pricing table | 3 |
+| Anywhere you already used a dark band | Not 4 again |
 
-### Ghost (Transparent)
-```json
-{
-  "style": "basic",
-  "color": "palette1",
-  "background": "transparent",
-  "backgroundHover": "palette8"
-}
-```
+## Anti-patterns
 
-## Best Practices
+**Two primary buttons.** Pattern 4 pairs fill with outline for a reason. Two
+filled buttons of equal weight measurably split clicks rather than adding them.
 
-1. **Single focus**: One primary CTA per section
-2. **Urgency words**: "Now", "Today", "Free", "Limited"
-3. **Value proposition**: Clear benefit statement
-4. **Visual hierarchy**: Button stands out from background
-5. **Trust elements**: Stats, testimonials, guarantees nearby
-6. **Responsive**: Buttons stack nicely on mobile
-7. **Contrast**: Ensure WCAG AA contrast ratios
+**Palette text on a hex background.** `"color":"palette1"` on a `#07101f` band
+resolves to whatever the theme's palette1 is — often navy on navy.
+
+**A CTA band with no offer.** "Learn more" pointing at the homepage is a band
+that costs scroll depth and returns nothing. If there is no next step, leave the
+section out.

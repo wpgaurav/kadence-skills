@@ -1,154 +1,209 @@
-# Kadence Blocks Template Creation Skill
+---
+name: kadence-blocks
+description: Generate production-ready WordPress Gutenberg markup with Kadence Blocks 3.7.10 — heroes, feature grids, CTAs, pricing, FAQs, tabs, testimonials, tables, forms, stats and full page layouts. Use when asked to build a WordPress section, landing page, or template with Kadence.
+---
 
-**Activation**: Use when creating WordPress Gutenberg templates using Kadence Blocks. Triggers: "kadence template", "kadence section", "kadence blocks", "create a hero section", "landing page with Kadence", etc.
+# Kadence Blocks Template Creation
 
-## Overview
+Produce block markup that pastes into the WordPress editor and validates on the
+first try. Everything here is verified against **Kadence Blocks 3.7.10** on
+WordPress 7.1.
 
-This skill enables creation of production-ready Kadence Blocks templates for WordPress. Templates are output as WordPress Gutenberg block markup that can be directly pasted into the Block Editor.
+## Read this before generating anything
 
-## Block Markup Format
+Kadence markup is unforgiving in one specific way: a static block's saved HTML
+must match what its `save()` function would produce, exactly. Get a class name
+or a wrapper `<div>` wrong and the editor throws "This block contains
+unexpected or invalid content" and offers to recover it — which strips the
+user's styling.
 
-WordPress blocks are serialized as HTML comments with JSON attributes:
+Three rules cover most of the failure surface.
 
-```html
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-layout-abc123","columns":2,"colLayout":"equal"} -->
-<div class="wp-block-kadence-rowlayout alignnone kt-row-layout-inner kt-layout-id-abc123">
-  <div class="kt-row-column-wrap kt-has-2-columns">
-    <!-- wp:kadence/column {"id":1,"uniqueID":"kt-col-def456"} -->
-    <div class="wp-block-kadence-column kadence-column-abc123"><div class="kt-inside-inner-col">
-      <!-- Inner blocks here -->
-    </div></div>
-    <!-- /wp:kadence/column -->
-  </div>
-</div>
-<!-- /wp:kadence/rowlayout -->
+**Rule 1 — Know which blocks save HTML and which don't.** Dynamic blocks are
+comment-only; writing HTML inside them makes them invalid. Static blocks
+require their exact HTML. `kadence/rowlayout` is dynamic, which surprises
+people: it has no `<div class="wp-block-kadence-rowlayout">` wrapper and no
+`kt-row-column-wrap`. Those exist only on the rendered front end.
+
+**Rule 2 — Class names are built from `uniqueID` with no separator, usually.**
+`uniqueID` `abc123` gives `kadence-columnabc123`. A minority of blocks use a
+hyphen. Both lists are in [reference/save-markup.md](reference/save-markup.md).
+Never put a generated class in `className`.
+
+**Rule 3 — Only use attributes that exist.** The editor silently discards
+unknown attribute names and wrong types, so invented attributes produce markup
+that validates perfectly and does nothing. Check
+[reference/block-attributes.md](reference/block-attributes.md) — all 62 blocks
+and 2,705 attributes, generated from the plugin's own manifests.
+
+**Rule 4 — Six blocks need `"kbVersion":2` or they do not render properly.**
+`rowlayout`, `column`, `infobox`, `googlemaps`, `advancedgallery` and
+`testimonials` gate their modern PHP render on `kbVersion > 1`. Omit it and the
+block still validates in the editor — but on the front end `rowlayout` emits
+**no wrapper at all**, so columns stack, backgrounds vanish and padding is
+ignored, while `testimonials` degrades to a bulleted list.
+
+This is the one failure the editor cannot warn you about, because the markup is
+genuinely valid. The editor sets `kbVersion` for you when you insert a block
+through the UI; hand-written markup has to include it.
+
+**Do not add `kbVersion` to any other block.** It exists only on those six. On
+`image`, `advancedbtn`, `icon`, `iconlist` and everything else it is an unknown
+attribute, and the editor drops it silently. The linter flags both mistakes —
+missing where required, present where it is not — so run it rather than trying
+to remember the list.
+
+## Reference files
+
+| File | What it holds |
+|---|---|
+| [reference/save-markup.md](reference/save-markup.md) | Exact save HTML per block, class formulas, sourced-attribute rules |
+| [reference/block-attributes.md](reference/block-attributes.md) | Every attribute, type and default, generated from `block.json` |
+| [reference/block-schema.json](reference/block-schema.json) | The same data, machine-readable, used by the linter |
+
+## Pattern files
+
+| File | Covers |
+|---|---|
+| [kadence-hero.md](kadence-hero.md) | Centered, split, background-image and video heroes |
+| [kadence-features.md](kadence-features.md) | Feature grids, icon lists, alternating rows |
+| [kadence-cta.md](kadence-cta.md) | Call-to-action bands, newsletter strips, banners |
+| [kadence-pricing.md](kadence-pricing.md) | Pricing tables and comparison columns |
+| [kadence-testimonials.md](kadence-testimonials.md) | Testimonial grids, carousels, logo walls |
+| [kadence-faq.md](kadence-faq.md) | Accordion FAQs with schema-friendly structure |
+| [kadence-tabs.md](kadence-tabs.md) | Tabbed content, the trickiest markup in the plugin |
+| [kadence-table.md](kadence-table.md) | Data and comparison tables |
+| [kadence-forms.md](kadence-forms.md) | Advanced Form and the legacy inline form |
+| [kadence-media.md](kadence-media.md) | Images, galleries, video popups, maps |
+| [kadence-stats.md](kadence-stats.md) | Count-up numbers, progress bars, countdowns |
+| [kadence-pages.md](kadence-pages.md) | Whole-page compositions built from the above |
+| [kadence-snippets.md](kadence-snippets.md) | Small reusable fragments and utility patterns |
+
+## The block set
+
+### Layout
+| Block | Family | Purpose |
+|---|---|---|
+| `kadence/rowlayout` | dynamic | Section container, 1–6 columns |
+| `kadence/column` | static | A column inside a row |
+
+### Content
+| Block | Family | Purpose |
+|---|---|---|
+| `kadence/advancedheading` | static | Headings *and* paragraphs |
+| `kadence/advancedbtn` | static | Button group wrapper |
+| `kadence/singlebtn` | dynamic | One button |
+| `kadence/infobox` | static | Icon + title + text card |
+| `kadence/iconlist` + `kadence/listitem` | static | Checklists |
+| `kadence/icon` + `kadence/single-icon` | static | Standalone icons |
+| `kadence/image` | static | Image with advanced controls |
+| `kadence/spacer` | static | Spacing and dividers |
+| `kadence/show-more` | static | Collapsible overflow content |
+
+### Composite
+| Block | Family | Purpose |
+|---|---|---|
+| `kadence/accordion` + `kadence/pane` | static | FAQs |
+| `kadence/tabs` + `kadence/tab` | static | Tabbed panels |
+| `kadence/testimonials` + `kadence/testimonial` | dynamic | Social proof |
+| `kadence/table` + `table-row` + `table-data` | dynamic | Tables |
+| `kadence/posts` | dynamic | Post grid |
+| `kadence/advanced-form` | dynamic | Form by post ID |
+| `kadence/countup`, `countdown`, `progress-bar` | mixed | Stats |
+| `kadence/advancedgallery` | static | Galleries |
+| `kadence/videopopup`, `googlemaps`, `lottie` | mixed | Embeds |
+
+## Attributes you will use constantly
+
+### Colors
+Kadence themes expose a palette. Use `palette1` … `palette9` rather than hex
+so the section follows the site's theme. `palette1`–`palette3` are usually the
+brand accents, `palette4`–`palette6` neutrals/text, `palette7`–`palette9`
+backgrounds from dark to light.
+
+```
+"bgColor":"palette9"     row background
+"color":"palette4"       text color
+"background":"palette1"  button fill
 ```
 
-## Core Blocks Reference
+Hex values work too. Mixing them is fine; palette slots just survive a theme
+change.
 
-### Layout Blocks
-| Block | Name | Purpose |
-|-------|------|---------|
-| `kadence/rowlayout` | Row Layout | Container with columns (1-6 columns) |
-| `kadence/column` | Section | Column within Row Layout |
+### Responsive values
+Kadence has three conventions and does not use them consistently. Check the
+attribute table when unsure.
 
-### Content Blocks
-| Block | Name | Purpose |
-|-------|------|---------|
-| `kadence/advancedheading` | Advanced Text | Headings and paragraphs with full styling |
-| `kadence/advancedbtn` | Advanced Button | Button container (holds singlebtn blocks) |
-| `kadence/singlebtn` | Single Button | Individual button with link/styling |
-| `kadence/infobox` | Info Box | Icon/image + title + description card |
-| `kadence/iconlist` | Icon List | Bulleted list with custom icons |
-| `kadence/icon` | Icon | Standalone icon(s) |
-| `kadence/image` | Advanced Image | Image with advanced controls |
-| `kadence/spacer` | Spacer/Divider | Vertical spacing |
+- **Three-value arrays** `[desktop, tablet, mobile]` — `fontHeight`, `maxWidth`
+  on `advancedheading`, `width` on `singlebtn`.
+- **Four-value arrays** `[top, right, bottom, left]` — `padding`, `margin`,
+  `borderRadius`.
+- **Separate attributes per breakpoint** — `size` / `tabSize` / `mobileSize` on
+  `advancedheading`; `topPadding` / `topPaddingM` on `rowlayout`.
 
-### Complex Blocks
-| Block | Name | Purpose |
-|-------|------|---------|
-| `kadence/accordion` | Accordion | Collapsible FAQ/content panels |
-| `kadence/tabs` | Tabs | Tabbed content sections |
-| `kadence/testimonials` | Testimonials | Testimonial grid/carousel |
-| `kadence/posts` | Posts | Dynamic post grid |
-| `kadence/countdown` | Countdown | Timer countdown |
-| `kadence/countup` | Count Up | Animated number counter |
-| `kadence/table` | Table (Adv) | Data tables with rows/cells |
-| `kadence/advanced-form` | Advanced Form | Contact forms with field types |
+There is no `tabletSize`. It is `tabSize`. This is the single most common
+invented attribute.
 
-## Essential Attributes
-
-### uniqueID Pattern
-Every block needs a unique ID. Generate as: `kt-{block-short}-{random-alphanumeric-6}`
-
-Examples:
-- Row Layout: `kt-layout-abc123`
-- Column: `kt-col-def456`
-- Heading: `kt-adv-heading-ghi789`
-- Button: `kt-btn-jkl012`
-
-### Responsive Arrays
-Many attributes use 3-value arrays: `[desktop, tablet, mobile]`
-
-```json
-"padding": [40, 30, 20]        // 40px desktop, 30px tablet, 20px mobile
-"fontSize": [48, 36, 28]       // Font sizes per device
-"columns": [3, 2, 1]           // 3 cols desktop, 2 tablet, 1 mobile
+### Row sizing
+```
+"align":"full"            edge-to-edge section
+"inheritMaxWidth":true    constrain inner content to theme width
+"maxWidth":1200           explicit inner width (number, not array)
+"topPadding":100          desktop padding, number
+"topPaddingM":60          mobile padding
+"verticalAlignment":"middle"
 ```
 
-### Color System
-Use palette references for theme consistency:
-- `palette1` through `palette9` - Theme palette colors
-- Direct hex values: `#1a1a1a`
-- CSS variables: `var(--global-palette1)`
+## uniqueID discipline
 
-### Spacing Presets
-Kadence uses size presets:
-- `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `xxl`
-- Or numeric values in px
+Kadence emits one CSS rule per `uniqueID`. Two blocks sharing an ID share
+styling, which shows up as "why did changing this section change that one".
 
-## Column Layouts
+- Give every block on the page a distinct `uniqueID`.
+- Real Kadence IDs look like `123_a4b5c6`. Readable IDs (`hero_h1`) work fine
+  and are easier to hand-edit.
+- When you paste two examples from these files onto one page, rename the IDs in
+  the second one. The examples deliberately use per-file prefixes to reduce the
+  chance of collision, but they are not globally unique.
 
-### colLayout Values (kadence/rowlayout)
-| Value | Description |
-|-------|-------------|
-| `equal` | Equal width columns |
-| `left-golden` | 2:1 ratio (left larger) |
-| `right-golden` | 1:2 ratio (right larger) |
-| `left-half` | 2:1:1 ratio (3 cols) |
-| `right-half` | 1:1:2 ratio (3 cols) |
-| `center-half` | 1:2:1 ratio (3 cols) |
-| `center-wide` | 1:3:1 ratio (3 cols) |
-| `row` | Stack vertically |
-| `first-row` | First column full width |
-| `last-row` | Last column full width |
+## Verifying your output
 
-## Common Icon Names
+The repo ships the checks used to build it:
 
-Icons use prefix `fe_` (Feather icons) or `fas_` (Font Awesome solid):
-
-**Feather (Line)**: `fe_check`, `fe_checkCircle`, `fe_arrowRight`, `fe_star`, `fe_heart`, `fe_mail`, `fe_phone`, `fe_mapPin`, `fe_clock`, `fe_user`, `fe_shield`, `fe_zap`, `fe_award`, `fe_target`, `fe_trending-up`
-
-**Font Awesome**: `fas_check`, `fas_star`, `fas_heart`, `fas_rocket`, `fas_bolt`, `fas_gem`, `fas_crown`
-
-## Template Creation Process
-
-1. **Determine section type** - Hero, features, testimonials, CTA, etc.
-2. **Plan column structure** - How many columns? Responsive behavior?
-3. **Generate unique IDs** - Create IDs for all blocks
-4. **Build from outside in** - rowlayout → column → content blocks
-5. **Add responsive values** - Ensure tablet/mobile work well
-6. **Test markup validity** - Proper opening/closing tags
-
-## Output Format
-
-Output clean block markup that can be directly pasted into WordPress Block Editor:
-
-```html
-<!-- wp:kadence/rowlayout {...} -->
-...
-<!-- /wp:kadence/rowlayout -->
+```bash
+python3 tools/lint-attributes.py path/to/markup.html
 ```
 
-**Important**: Do NOT include extra comments like `<!-- SECTION: Name -->` as they interfere with block parsing.
+catches invented attribute names and wrong types — the failures that pass
+validation but silently do nothing.
 
-## Related Skills
+```bash
+python3 tools/extract-examples.py /tmp/all.html
+```
 
-For specific section types, see:
-- `kadence-hero.md` - Hero/welcome sections
-- `kadence-features.md` - Feature grids and info boxes
-- `kadence-testimonials.md` - Testimonial sections
-- `kadence-cta.md` - Call-to-action sections
-- `kadence-table.md` - Advanced data tables and comparison tables
-- `kadence-forms.md` - Contact forms, surveys, and advanced forms
-- `kadence-snippets.md` - Reusable block snippets
+pulls every example in the repo into one file for a single editor round-trip.
+Validate that file against a real site (the WordPress Studio MCP
+`validate_blocks` tool, or paste into an editor and watch for recovery
+prompts).
 
-## Quality Checklist
+```bash
+python3 tools/extract-schema.py _reference/kadence-blocks
+```
 
-- [ ] All blocks have unique IDs
-- [ ] Responsive values set appropriately
-- [ ] Proper nesting (rowlayout → column → content)
-- [ ] Opening and closing tags match
-- [ ] Colors use palette or consistent hex values
-- [ ] Spacing is consistent across sections
-- [ ] Mobile layout makes sense (columns stack properly)
+regenerates the attribute reference from a plugin copy. Re-run it after a
+Kadence update and re-lint; that is how these docs stay honest across versions.
+
+## When you are unsure
+
+Prefer the pattern file over improvising. If you need a variant that is not
+covered:
+
+1. Start from the closest verified pattern.
+2. Change only attributes you have confirmed in the attribute table.
+3. Leave the save HTML structurally identical unless the attribute you changed
+   is one the table flags as structural (`mediaType` on infobox, `columns` on
+   iconlist, `paneCount` on accordion, `tabCount` on tabs).
+4. Lint, then validate.
+
+Guessing a class name is never safe. Guessing an attribute name is worse,
+because nothing will tell you it was wrong.
