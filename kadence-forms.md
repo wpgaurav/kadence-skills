@@ -1,436 +1,165 @@
-# Kadence Advanced Forms Skill
+# Kadence Forms
 
-**Activation**: Creating contact forms, newsletter signups, registration forms, surveys, quote requests with Kadence Blocks.
+Kadence ships two form systems. Pick the right one first — they are not
+interchangeable and the older one is a trap for new work.
 
-## Form Block Structure
+| | Advanced Form | Legacy Form |
+|---|---|---|
+| Block | `kadence/advanced-form` | `kadence/form` |
+| Family | Dynamic (comment-only) | Static (long saved HTML) |
+| Fields live in | A `kadence_form` post | The page itself, in one giant attribute |
+| Reusable across pages | Yes, by ID | No |
+| Status | Current | Deprecated |
 
-Kadence Advanced Form uses a parent-child structure:
-- `kadence/advanced-form` - Container with form settings (saved as post type)
-- Field blocks placed directly inside or within `kadence/column` for multi-column layouts
-- `kadence/advanced-form-submit` - Submit button (required)
+**Use Advanced Form for anything new.** The legacy block's saved markup is a
+complete rendered `<form>` — every input, label and hidden field — which makes
+it both fragile to hand-edit and impossible to reuse. It is documented at the
+end only because existing content still contains it.
 
-## Available Field Types
+## How Advanced Form works
 
-| Block | Use Case |
-|-------|----------|
-| `kadence/advanced-form-text` | Single-line text input |
-| `kadence/advanced-form-email` | Email address input |
-| `kadence/advanced-form-textarea` | Multi-line text area |
-| `kadence/advanced-form-telephone` | Phone number input |
-| `kadence/advanced-form-number` | Numeric input |
-| `kadence/advanced-form-select` | Dropdown selection |
-| `kadence/advanced-form-radio` | Radio button group |
-| `kadence/advanced-form-checkbox` | Checkbox group |
-| `kadence/advanced-form-date` | Date picker |
-| `kadence/advanced-form-time` | Time picker |
-| `kadence/advanced-form-file` | File upload |
-| `kadence/advanced-form-accept` | Terms acceptance checkbox |
-| `kadence/advanced-form-hidden` | Hidden field |
-| `kadence/advanced-form-captcha` | CAPTCHA protection |
-| `kadence/advanced-form-submit` | Submit button |
-
-## Form Patterns
-
-### Pattern 1: Simple Contact Form
-
-Basic contact form with name, email, and message.
+The form is a **post**, not a block. `kadence/advanced-form` on a page is just
+a pointer:
 
 ```html
-<!-- wp:kadence/advanced-form {"id":1,"uniqueID":"kt-form-001"} -->
-<div class="wp-block-kadence-advanced-form kb-advanced-form-kt-form-001">
-
-<!-- wp:kadence/advanced-form-text {"uniqueID":"kt-field-001","label":"Your Name","placeholder":"Enter your name","required":true,"inputName":"name"} -->
-<div class="kb-adv-form-field kb-adv-form-text-field kb-field-kt-field-001"><label for="kb-field-kt-field-001">Your Name<span class="required">*</span></label><input type="text" name="name" id="kb-field-kt-field-001" placeholder="Enter your name" required /></div>
-<!-- /wp:kadence/advanced-form-text -->
-
-<!-- wp:kadence/advanced-form-email {"uniqueID":"kt-field-002","label":"Email Address","placeholder":"you@example.com","required":true,"inputName":"email"} -->
-<div class="kb-adv-form-field kb-adv-form-email-field kb-field-kt-field-002"><label for="kb-field-kt-field-002">Email Address<span class="required">*</span></label><input type="email" name="email" id="kb-field-kt-field-002" placeholder="you@example.com" required /></div>
-<!-- /wp:kadence/advanced-form-email -->
-
-<!-- wp:kadence/advanced-form-textarea {"uniqueID":"kt-field-003","label":"Message","placeholder":"How can we help you?","required":true,"rows":5,"inputName":"message"} -->
-<div class="kb-adv-form-field kb-adv-form-textarea-field kb-field-kt-field-003"><label for="kb-field-kt-field-003">Message<span class="required">*</span></label><textarea name="message" id="kb-field-kt-field-003" placeholder="How can we help you?" rows="5" required></textarea></div>
-<!-- /wp:kadence/advanced-form-textarea -->
-
-<!-- wp:kadence/advanced-form-submit {"uniqueID":"kt-submit-001","text":"Send Message","sizePreset":"large","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"hAlign":"left"} -->
-<div class="kb-adv-form-field kb-submit-field kb-field-kt-submit-001"><button type="submit" class="kb-adv-form-submit-btn">Send Message</button></div>
-<!-- /wp:kadence/advanced-form-submit -->
-
-</div>
-<!-- /wp:kadence/advanced-form -->
+<!-- wp:kadence/advanced-form {"uniqueID":"af_contact","id":9} /-->
 ```
 
-### Pattern 2: Two-Column Contact Form
+`id` is the post ID of a `kadence_form` post. That is the whole block. Nothing
+about the fields, styling or delivery lives on the page.
 
-Contact form with side-by-side fields using rowlayout.
+The field blocks go in **that post's content**, and they are all dynamic too:
 
 ```html
-<!-- wp:kadence/advanced-form {"id":2,"uniqueID":"kt-form-002"} -->
-<div class="wp-block-kadence-advanced-form kb-advanced-form-kt-form-002">
+<!-- wp:kadence/advanced-form-text {"uniqueID":"fld_name","label":"Full name","inputName":"name","required":true,"showLabel":true} /-->
 
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-001","columns":2,"colLayout":"equal","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-001">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default">
+<!-- wp:kadence/advanced-form-email {"uniqueID":"fld_email","label":"Work email","inputName":"email","required":true,"showLabel":true,"placeholder":"you@company.com"} /-->
 
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-001a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-001a"><div class="kt-inside-inner-col">
+<!-- wp:kadence/advanced-form-textarea {"uniqueID":"fld_msg","label":"What are you trying to move?","inputName":"message","rows":5,"showLabel":true} /-->
 
-<!-- wp:kadence/advanced-form-text {"uniqueID":"kt-field-f001","label":"First Name","placeholder":"First name","required":true,"inputName":"first_name"} -->
-<div class="kb-adv-form-field kb-adv-form-text-field kb-field-kt-field-f001"><label for="kb-field-kt-field-f001">First Name<span class="required">*</span></label><input type="text" name="first_name" id="kb-field-kt-field-f001" placeholder="First name" required /></div>
-<!-- /wp:kadence/advanced-form-text -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-001b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-001b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-text {"uniqueID":"kt-field-f002","label":"Last Name","placeholder":"Last name","required":true,"inputName":"last_name"} -->
-<div class="kb-adv-form-field kb-adv-form-text-field kb-field-kt-field-f002"><label for="kb-field-kt-field-f002">Last Name<span class="required">*</span></label><input type="text" name="last_name" id="kb-field-kt-field-f002" placeholder="Last name" required /></div>
-<!-- /wp:kadence/advanced-form-text -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-002","columns":2,"colLayout":"equal","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-002">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-002a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-002a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-email {"uniqueID":"kt-field-f003","label":"Email","placeholder":"you@example.com","required":true,"inputName":"email"} -->
-<div class="kb-adv-form-field kb-adv-form-email-field kb-field-kt-field-f003"><label for="kb-field-kt-field-f003">Email<span class="required">*</span></label><input type="email" name="email" id="kb-field-kt-field-f003" placeholder="you@example.com" required /></div>
-<!-- /wp:kadence/advanced-form-email -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-002b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-002b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-telephone {"uniqueID":"kt-field-f004","label":"Phone","placeholder":"+1 (555) 000-0000","inputName":"phone"} -->
-<div class="kb-adv-form-field kb-adv-form-tel-field kb-field-kt-field-f004"><label for="kb-field-kt-field-f004">Phone</label><input type="tel" name="phone" id="kb-field-kt-field-f004" placeholder="+1 (555) 000-0000" /></div>
-<!-- /wp:kadence/advanced-form-telephone -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- wp:kadence/advanced-form-select {"uniqueID":"kt-field-f005","label":"How did you hear about us?","inputName":"source","options":[{"value":"google","label":"Google Search"},{"value":"social","label":"Social Media"},{"value":"referral","label":"Referral"},{"value":"other","label":"Other"}]} -->
-<div class="kb-adv-form-field kb-adv-form-select-field kb-field-kt-field-f005"><label for="kb-field-kt-field-f005">How did you hear about us?</label><select name="source" id="kb-field-kt-field-f005"><option value="google">Google Search</option><option value="social">Social Media</option><option value="referral">Referral</option><option value="other">Other</option></select></div>
-<!-- /wp:kadence/advanced-form-select -->
-
-<!-- wp:kadence/advanced-form-textarea {"uniqueID":"kt-field-f006","label":"Your Message","placeholder":"Tell us about your project...","required":true,"rows":4,"inputName":"message"} -->
-<div class="kb-adv-form-field kb-adv-form-textarea-field kb-field-kt-field-f006"><label for="kb-field-kt-field-f006">Your Message<span class="required">*</span></label><textarea name="message" id="kb-field-kt-field-f006" placeholder="Tell us about your project..." rows="4" required></textarea></div>
-<!-- /wp:kadence/advanced-form-textarea -->
-
-<!-- wp:kadence/advanced-form-submit {"uniqueID":"kt-submit-002","text":"Submit Request","sizePreset":"large","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"hAlign":"left","widthType":"full"} -->
-<div class="kb-adv-form-field kb-submit-field kb-field-kt-submit-002"><button type="submit" class="kb-adv-form-submit-btn">Submit Request</button></div>
-<!-- /wp:kadence/advanced-form-submit -->
-
-</div>
-<!-- /wp:kadence/advanced-form -->
+<!-- wp:kadence/advanced-form-submit {"uniqueID":"fld_submit","text":"Send it over","hAlign":"left","sizePreset":"standard"} /-->
 ```
 
-### Pattern 3: Newsletter Signup Form
+**The submit button's label is `text`, and it defaults to an empty string.**
+Leave it out and the form renders a correctly styled button with no words in
+it — no error, no warning, just a small coloured rectangle. This is the most
+likely thing to go wrong in a hand-written form, so set `text` first.
 
-Compact inline newsletter subscription.
+**Payoff:** one form post, referenced from a landing page, a pricing page and a
+footer — change the fields once and all three update.
+
+Create the post with WP-CLI when scripting:
+
+```bash
+wp post create --post_type=kadence_form --post_title="Contact form" --post_status=publish --post_content='<!-- wp:kadence/advanced-form-text {"uniqueID":"fld_name","label":"Full name","inputName":"name","required":true} /-->'
+```
+
+The returned post ID is what goes in the block's `id`.
+
+## Field blocks
+
+Every field block is dynamic and self-closing. The common attributes are the
+same across types:
+
+| Attribute | Purpose |
+|---|---|
+| `label` | Visible label |
+| `inputName` | The key in the submitted data |
+| `required` | Boolean |
+| `showLabel` | Set false for placeholder-only fields |
+| `placeholder` | Hint text |
+| `helpText` | Text below the field |
+| `ariaDescription` | Screen-reader-only description |
+| `errorMessage` / `requiredMessage` | Validation copy |
+| `defaultValue` | Pre-filled value |
+| `defaultParameter` | Pre-fill from a URL query parameter |
+| `maxWidth` / `minWidth` + their `…Unit` | Field sizing |
+
+Available types: `text`, `email`, `telephone`, `number`, `textarea`, `select`,
+`checkbox`, `radio`, `date`, `time`, `file`, `accept`, `captcha`, `hidden`.
+
+Type-specific extras worth knowing: `textarea` takes `rows`; `select` takes
+`options` and `multiSelect`; `advanced-form-submit` carries the whole button
+style set (`text`, `background`, `color`, `borderRadius`, `hAlign`,
+`sizePreset`, `icon`, …) rather than delegating to a button block. Note that
+submit uses `text` for its label while every input field uses `label` — the
+submit block has a `label` attribute too, and it is not the button text.
+
+`defaultParameter` is the useful one people miss. Set it to a query-string key
+and the field pre-fills from the URL, which is how you attribute a demo request
+to the campaign that produced it without a hidden-field hack.
+
+## Pattern — Contact section
 
 ```html
-<!-- wp:kadence/advanced-form {"id":3,"uniqueID":"kt-form-003"} -->
-<div class="wp-block-kadence-advanced-form kb-advanced-form-kt-form-003">
+<!-- wp:kadence/rowlayout {"uniqueID":"form1_row","columns":2,"colLayout":"equal","align":"full","inheritMaxWidth":true,"topPadding":80,"bottomPadding":80,"topPaddingM":48,"bottomPaddingM":48,"bgColor":"palette9","verticalAlignment":"top","kbVersion":2} -->
+<!-- wp:kadence/column {"uniqueID":"form1_c1","kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columnform1_c1"><div class="kt-inside-inner-col"><!-- wp:kadence/advancedheading {"uniqueID":"form1_h","htmlTag":"h2","size":32,"mobileSize":25,"fontWeight":"700","margin":[0,0,14,0]} -->
+<h2 class="kt-adv-headingform1_h wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingform1_h">Tell us what you are moving</h2>
+<!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-nl","columns":2,"colLayout":"right-forty","columnGutter":"narrow","verticalAlignment":"bottom"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-nl">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-narrow kt-row-valign-bottom">
+<!-- wp:kadence/advancedheading {"uniqueID":"form1_p","htmlTag":"p","color":"palette4","size":17,"margin":[0,0,22,0]} -->
+<p class="kt-adv-headingform1_p wp-block-kadence-advancedheading" data-kb-block="kb-adv-headingform1_p">An engineer reads every one of these. Expect a reply within one business day, and a straight answer if we are the wrong fit.</p>
+<!-- /wp:kadence/advancedheading -->
 
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-nl-a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-nl-a"><div class="kt-inside-inner-col">
+<!-- wp:kadence/iconlist {"uniqueID":"form1_list","columns":1,"icon":"fe_check","listGap":8} -->
+<div class="wp-block-kadence-iconlist kt-svg-icon-list-items kt-svg-icon-list-itemsform1_list kt-svg-icon-list-columns-1 alignnone"><ul class="kt-svg-icon-list"><!-- wp:kadence/listitem {"uniqueID":"form1_i1","text":"No sales sequence"} -->
+<li class="wp-block-kadence-listitem kt-svg-icon-list-item-wrap kt-svg-icon-list-item-form1_i1"><span data-name="USE_PARENT_DEFAULT_ICON" data-stroke="USE_PARENT_DEFAULT_WIDTH" data-class="kt-svg-icon-list-single" class="kadence-dynamic-icon"></span><span class="kt-svg-icon-list-text">No sales sequence</span></li>
+<!-- /wp:kadence/listitem -->
 
-<!-- wp:kadence/advanced-form-email {"uniqueID":"kt-field-nl001","label":"Email Address","showLabel":false,"placeholder":"Enter your email address","required":true,"inputName":"email"} -->
-<div class="kb-adv-form-field kb-adv-form-email-field kb-field-kt-field-nl001"><input type="email" name="email" id="kb-field-kt-field-nl001" placeholder="Enter your email address" required /></div>
-<!-- /wp:kadence/advanced-form-email -->
-
-</div></div>
+<!-- wp:kadence/listitem {"uniqueID":"form1_i2","text":"We tell you if another tool fits better"} -->
+<li class="wp-block-kadence-listitem kt-svg-icon-list-item-wrap kt-svg-icon-list-item-form1_i2"><span data-name="USE_PARENT_DEFAULT_ICON" data-stroke="USE_PARENT_DEFAULT_WIDTH" data-class="kt-svg-icon-list-single" class="kadence-dynamic-icon"></span><span class="kt-svg-icon-list-text">We tell you if another tool fits better</span></li>
+<!-- /wp:kadence/listitem --></ul></div>
+<!-- /wp:kadence/iconlist --></div></div>
 <!-- /wp:kadence/column -->
 
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-nl-b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-nl-b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-submit {"uniqueID":"kt-submit-nl","text":"Subscribe","sizePreset":"medium","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"widthType":"full","icon":"fe_mail","iconSide":"left"} -->
-<div class="kb-adv-form-field kb-submit-field kb-field-kt-submit-nl"><button type="submit" class="kb-adv-form-submit-btn"><span class="kt-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>Subscribe</button></div>
-<!-- /wp:kadence/advanced-form-submit -->
-
-</div></div>
+<!-- wp:kadence/column {"uniqueID":"form1_c2","background":"#ffffff","borderRadius":[10,10,10,10],"padding":[32,32,32,32],"kbVersion":2} -->
+<div class="wp-block-kadence-column kadence-columnform1_c2"><div class="kt-inside-inner-col"><!-- wp:kadence/advanced-form {"uniqueID":"form1_af","id":9} /--></div></div>
 <!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-</div>
-<!-- /wp:kadence/advanced-form -->
-```
-
-### Pattern 4: Quote Request Form
-
-Detailed form with multiple field types.
-
-```html
-<!-- wp:kadence/advanced-form {"id":4,"uniqueID":"kt-form-004"} -->
-<div class="wp-block-kadence-advanced-form kb-advanced-form-kt-form-004">
-
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-q1","columns":2,"colLayout":"equal","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-q1">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-q1a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q1a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-text {"uniqueID":"kt-field-q001","label":"Full Name","required":true,"inputName":"name"} -->
-<div class="kb-adv-form-field kb-adv-form-text-field kb-field-kt-field-q001"><label for="kb-field-kt-field-q001">Full Name<span class="required">*</span></label><input type="text" name="name" id="kb-field-kt-field-q001" required /></div>
-<!-- /wp:kadence/advanced-form-text -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-q1b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q1b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-text {"uniqueID":"kt-field-q002","label":"Company Name","inputName":"company"} -->
-<div class="kb-adv-form-field kb-adv-form-text-field kb-field-kt-field-q002"><label for="kb-field-kt-field-q002">Company Name</label><input type="text" name="company" id="kb-field-kt-field-q002" /></div>
-<!-- /wp:kadence/advanced-form-text -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-q2","columns":2,"colLayout":"equal","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-q2">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-q2a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q2a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-email {"uniqueID":"kt-field-q003","label":"Email","required":true,"inputName":"email"} -->
-<div class="kb-adv-form-field kb-adv-form-email-field kb-field-kt-field-q003"><label for="kb-field-kt-field-q003">Email<span class="required">*</span></label><input type="email" name="email" id="kb-field-kt-field-q003" required /></div>
-<!-- /wp:kadence/advanced-form-email -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-q2b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q2b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-telephone {"uniqueID":"kt-field-q004","label":"Phone","inputName":"phone"} -->
-<div class="kb-adv-form-field kb-adv-form-tel-field kb-field-kt-field-q004"><label for="kb-field-kt-field-q004">Phone</label><input type="tel" name="phone" id="kb-field-kt-field-q004" /></div>
-<!-- /wp:kadence/advanced-form-telephone -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- wp:kadence/advanced-form-select {"uniqueID":"kt-field-q005","label":"Project Type","required":true,"inputName":"project_type","options":[{"value":"","label":"Select a project type..."},{"value":"website","label":"New Website"},{"value":"redesign","label":"Website Redesign"},{"value":"ecommerce","label":"E-commerce Store"},{"value":"webapp","label":"Web Application"},{"value":"other","label":"Other"}]} -->
-<div class="kb-adv-form-field kb-adv-form-select-field kb-field-kt-field-q005"><label for="kb-field-kt-field-q005">Project Type<span class="required">*</span></label><select name="project_type" id="kb-field-kt-field-q005" required><option value="">Select a project type...</option><option value="website">New Website</option><option value="redesign">Website Redesign</option><option value="ecommerce">E-commerce Store</option><option value="webapp">Web Application</option><option value="other">Other</option></select></div>
-<!-- /wp:kadence/advanced-form-select -->
-
-<!-- wp:kadence/rowlayout {"uniqueID":"kt-form-row-q3","columns":2,"colLayout":"equal","columnGutter":"default"} -->
-<div class="wp-block-kadence-rowlayout kt-row-layout-inner kt-layout-id-form-row-q3">
-<div class="kt-row-column-wrap kt-has-2-columns kt-gutter-default">
-
-<!-- wp:kadence/column {"id":1,"uniqueID":"kt-form-col-q3a"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q3a"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-select {"uniqueID":"kt-field-q006","label":"Budget Range","inputName":"budget","options":[{"value":"","label":"Select budget range..."},{"value":"5k-10k","label":"$5,000 - $10,000"},{"value":"10k-25k","label":"$10,000 - $25,000"},{"value":"25k-50k","label":"$25,000 - $50,000"},{"value":"50k+","label":"$50,000+"}]} -->
-<div class="kb-adv-form-field kb-adv-form-select-field kb-field-kt-field-q006"><label for="kb-field-kt-field-q006">Budget Range</label><select name="budget" id="kb-field-kt-field-q006"><option value="">Select budget range...</option><option value="5k-10k">$5,000 - $10,000</option><option value="10k-25k">$10,000 - $25,000</option><option value="25k-50k">$25,000 - $50,000</option><option value="50k+">$50,000+</option></select></div>
-<!-- /wp:kadence/advanced-form-select -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-<!-- wp:kadence/column {"id":2,"uniqueID":"kt-form-col-q3b"} -->
-<div class="wp-block-kadence-column kadence-column-form-col-q3b"><div class="kt-inside-inner-col">
-
-<!-- wp:kadence/advanced-form-date {"uniqueID":"kt-field-q007","label":"Desired Start Date","inputName":"start_date"} -->
-<div class="kb-adv-form-field kb-adv-form-date-field kb-field-kt-field-q007"><label for="kb-field-kt-field-q007">Desired Start Date</label><input type="date" name="start_date" id="kb-field-kt-field-q007" /></div>
-<!-- /wp:kadence/advanced-form-date -->
-
-</div></div>
-<!-- /wp:kadence/column -->
-
-</div>
-</div>
-<!-- /wp:kadence/rowlayout -->
-
-<!-- wp:kadence/advanced-form-checkbox {"uniqueID":"kt-field-q008","label":"Services Needed","inputName":"services","options":[{"value":"design","label":"UI/UX Design","selected":false},{"value":"development","label":"Custom Development","selected":false},{"value":"seo","label":"SEO Optimization","selected":false},{"value":"hosting","label":"Managed Hosting","selected":false},{"value":"maintenance","label":"Ongoing Maintenance","selected":false}],"inline":true} -->
-<div class="kb-adv-form-field kb-adv-form-checkbox-field kb-field-kt-field-q008"><label>Services Needed</label><div class="kb-checkbox-group"><label><input type="checkbox" name="services[]" value="design" /> UI/UX Design</label><label><input type="checkbox" name="services[]" value="development" /> Custom Development</label><label><input type="checkbox" name="services[]" value="seo" /> SEO Optimization</label><label><input type="checkbox" name="services[]" value="hosting" /> Managed Hosting</label><label><input type="checkbox" name="services[]" value="maintenance" /> Ongoing Maintenance</label></div></div>
-<!-- /wp:kadence/advanced-form-checkbox -->
-
-<!-- wp:kadence/advanced-form-textarea {"uniqueID":"kt-field-q009","label":"Project Details","placeholder":"Tell us about your project goals, requirements, and any other relevant information...","rows":6,"inputName":"details"} -->
-<div class="kb-adv-form-field kb-adv-form-textarea-field kb-field-kt-field-q009"><label for="kb-field-kt-field-q009">Project Details</label><textarea name="details" id="kb-field-kt-field-q009" placeholder="Tell us about your project goals, requirements, and any other relevant information..." rows="6"></textarea></div>
-<!-- /wp:kadence/advanced-form-textarea -->
-
-<!-- wp:kadence/advanced-form-accept {"uniqueID":"kt-field-q010","label":"Terms","required":true,"description":"I agree to the <a href=\"/privacy-policy\">Privacy Policy</a> and <a href=\"/terms\">Terms of Service</a>","inputName":"terms"} -->
-<div class="kb-adv-form-field kb-adv-form-accept-field kb-field-kt-field-q010"><label><input type="checkbox" name="terms" required /> I agree to the <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms">Terms of Service</a><span class="required">*</span></label></div>
-<!-- /wp:kadence/advanced-form-accept -->
-
-<!-- wp:kadence/advanced-form-submit {"uniqueID":"kt-submit-q","text":"Request Quote","sizePreset":"large","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"hAlign":"left","icon":"fe_send","iconSide":"right"} -->
-<div class="kb-adv-form-field kb-submit-field kb-field-kt-submit-q"><button type="submit" class="kb-adv-form-submit-btn">Request Quote<span class="kt-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span></button></div>
-<!-- /wp:kadence/advanced-form-submit -->
-
-</div>
-<!-- /wp:kadence/advanced-form -->
-```
-
-### Pattern 5: Feedback/Survey Form with Radio Buttons
-
-Collect feedback with radio button choices.
-
-```html
-<!-- wp:kadence/advanced-form {"id":5,"uniqueID":"kt-form-005"} -->
-<div class="wp-block-kadence-advanced-form kb-advanced-form-kt-form-005">
-
-<!-- wp:kadence/advanced-form-radio {"uniqueID":"kt-field-fb001","label":"How satisfied are you with our service?","required":true,"inputName":"satisfaction","options":[{"value":"very_satisfied","label":"Very Satisfied","selected":false},{"value":"satisfied","label":"Satisfied","selected":false},{"value":"neutral","label":"Neutral","selected":false},{"value":"dissatisfied","label":"Dissatisfied","selected":false},{"value":"very_dissatisfied","label":"Very Dissatisfied","selected":false}]} -->
-<div class="kb-adv-form-field kb-adv-form-radio-field kb-field-kt-field-fb001"><label>How satisfied are you with our service?<span class="required">*</span></label><div class="kb-radio-group"><label><input type="radio" name="satisfaction" value="very_satisfied" required /> Very Satisfied</label><label><input type="radio" name="satisfaction" value="satisfied" /> Satisfied</label><label><input type="radio" name="satisfaction" value="neutral" /> Neutral</label><label><input type="radio" name="satisfaction" value="dissatisfied" /> Dissatisfied</label><label><input type="radio" name="satisfaction" value="very_dissatisfied" /> Very Dissatisfied</label></div></div>
-<!-- /wp:kadence/advanced-form-radio -->
-
-<!-- wp:kadence/advanced-form-radio {"uniqueID":"kt-field-fb002","label":"Would you recommend us to others?","required":true,"inputName":"recommend","options":[{"value":"definitely","label":"Definitely yes","selected":false},{"value":"probably","label":"Probably yes","selected":false},{"value":"not_sure","label":"Not sure","selected":false},{"value":"probably_not","label":"Probably not","selected":false},{"value":"definitely_not","label":"Definitely not","selected":false}],"inline":true} -->
-<div class="kb-adv-form-field kb-adv-form-radio-field kb-field-kt-field-fb002"><label>Would you recommend us to others?<span class="required">*</span></label><div class="kb-radio-group kb-radio-inline"><label><input type="radio" name="recommend" value="definitely" required /> Definitely yes</label><label><input type="radio" name="recommend" value="probably" /> Probably yes</label><label><input type="radio" name="recommend" value="not_sure" /> Not sure</label><label><input type="radio" name="recommend" value="probably_not" /> Probably not</label><label><input type="radio" name="recommend" value="definitely_not" /> Definitely not</label></div></div>
-<!-- /wp:kadence/advanced-form-radio -->
-
-<!-- wp:kadence/advanced-form-textarea {"uniqueID":"kt-field-fb003","label":"What could we do better?","placeholder":"Your feedback helps us improve...","rows":4,"inputName":"feedback"} -->
-<div class="kb-adv-form-field kb-adv-form-textarea-field kb-field-kt-field-fb003"><label for="kb-field-kt-field-fb003">What could we do better?</label><textarea name="feedback" id="kb-field-kt-field-fb003" placeholder="Your feedback helps us improve..." rows="4"></textarea></div>
-<!-- /wp:kadence/advanced-form-textarea -->
-
-<!-- wp:kadence/advanced-form-email {"uniqueID":"kt-field-fb004","label":"Email (optional)","placeholder":"your@email.com","helpText":"Only if you'd like us to follow up","inputName":"email"} -->
-<div class="kb-adv-form-field kb-adv-form-email-field kb-field-kt-field-fb004"><label for="kb-field-kt-field-fb004">Email (optional)</label><input type="email" name="email" id="kb-field-kt-field-fb004" placeholder="your@email.com" /><p class="kb-field-help">Only if you'd like us to follow up</p></div>
-<!-- /wp:kadence/advanced-form-email -->
-
-<!-- wp:kadence/advanced-form-submit {"uniqueID":"kt-submit-fb","text":"Submit Feedback","sizePreset":"large","color":"#ffffff","background":"palette1","backgroundHover":"palette2","borderRadius":[6,6,6,6],"hAlign":"center","widthType":"full"} -->
-<div class="kb-adv-form-field kb-submit-field kb-field-kt-submit-fb"><button type="submit" class="kb-adv-form-submit-btn">Submit Feedback</button></div>
-<!-- /wp:kadence/advanced-form-submit -->
-
-</div>
-<!-- /wp:kadence/advanced-form -->
-```
-
-## Field Attribute Reference
-
-### Common Field Attributes
-
-All field types share these attributes:
-
-```json
-{
-  "uniqueID": "kt-field-xxx",
-  "formID": "kt-form-xxx",
-  "label": "Field Label",
-  "showLabel": true,
-  "placeholder": "Placeholder text",
-  "required": false,
-  "defaultValue": "",
-  "helpText": "Helper text below field",
-  "inputName": "field_name",
-  "ariaDescription": "",
-  "maxWidth": ["100","",""],
-  "maxWidthUnit": "%",
-  "errorMessage": "Custom error",
-  "requiredMessage": "This field is required"
-}
-```
-
-### Select/Radio/Checkbox Options
-
-```json
-{
-  "options": [
-    {"value": "option1", "label": "Option 1", "selected": false},
-    {"value": "option2", "label": "Option 2", "selected": false},
-    {"value": "option3", "label": "Option 3", "selected": true}
-  ],
-  "inline": false,
-  "multiSelect": false
-}
-```
-
-### Submit Button Attributes
-
-```json
-{
-  "uniqueID": "kt-submit-xxx",
-  "text": "Submit",
-  "sizePreset": "large",
-  "style": "basic",
-  "color": "#ffffff",
-  "background": "palette1",
-  "backgroundHover": "palette2",
-  "borderRadius": [6,6,6,6],
-  "hAlign": "left",
-  "thAlign": "",
-  "mhAlign": "",
-  "widthType": "auto",
-  "icon": "",
-  "iconSide": "right"
-}
-```
-
-## Size Presets
-
-| Preset | Use Case |
-|--------|----------|
-| `small` | Compact forms, sidebars |
-| `standard` | Default size |
-| `medium` | Slightly larger |
-| `large` | Prominent buttons |
-| `xlarge` | Hero CTAs |
-
-## Layout Tips
-
-### Multi-Column Forms
-
-Use `kadence/rowlayout` and `kadence/column` inside forms:
-
-```html
-<!-- wp:kadence/rowlayout {"columns":2,"colLayout":"equal"} -->
-  <!-- wp:kadence/column -->
-    <!-- Field 1 -->
-  <!-- /wp:kadence/column -->
-  <!-- wp:kadence/column -->
-    <!-- Field 2 -->
-  <!-- /wp:kadence/column -->
 <!-- /wp:kadence/rowlayout -->
 ```
 
-### Width Options
+**Payoff:** the form is one line, so restyling the card around it never risks
+breaking the form itself.
 
-| `widthType` | Behavior |
-|-------------|----------|
-| `auto` | Natural button width |
-| `fixed` | Set specific width |
-| `full` | 100% container width |
+Replace `id:9` with your own form post's ID. A missing or wrong ID renders an
+empty space with no error — check it after any content migration, because post
+IDs do not survive an export-import.
 
-## Best Practices
+## Spam handling
 
-1. **Required fields**: Mark essential fields as required
-2. **Labels**: Always show labels for accessibility
-3. **Placeholders**: Use as hints, not replacements for labels
-4. **Help text**: Explain complex fields
-5. **Validation**: Use appropriate field types (email, tel, number)
-6. **Layout**: Group related fields in rows
-7. **Button placement**: Align submit with form content
-8. **Mobile**: Stack columns on small screens
-9. **Terms**: Include accept field for legal compliance
-10. **Error messages**: Provide clear, helpful messages
+Advanced Form supports a honeypot and reCAPTCHA/Turnstile through the
+`advanced-form-captcha` field and the plugin's global settings. Add the captcha
+field to the form post, then configure keys in Kadence Blocks settings.
+
+Do not ship a public form with neither. A bare contact form on an indexed page
+collects spam within days.
+
+## The legacy form block
+
+`kadence/form` is **static** and saves a complete rendered `<form>` — labels,
+inputs, hidden fields, honeypot and submit button — as one long HTML string.
+Its fields live in a `fields` array attribute that must agree with every input
+in that HTML.
+
+Do not hand-write it. If you have to touch existing legacy forms:
+
+1. Open the page in the editor and edit through the UI, so the block
+   regenerates its own HTML.
+2. Or replace it with an Advanced Form and delete the legacy block.
+
+Migrating is usually less work than one careful edit. The legacy block also
+duplicates its entire field configuration on every page that uses it, so a
+label change means editing every copy.
+
+## Accessibility
+
+Keep `showLabel:true`. Placeholder-only fields fail WCAG — the hint vanishes
+the moment someone types, and screen readers treat placeholders inconsistently.
+
+Use `helpText` for format requirements ("include the country code") rather than
+burying them in the placeholder, and `ariaDescription` for anything a sighted
+user infers from layout.
+
+Write `requiredMessage` per field. "This field is required" on a five-field form
+tells someone using a screen reader nothing about which one.
