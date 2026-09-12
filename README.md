@@ -1,5 +1,7 @@
 # Kadence Skills
 
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=flat&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/gauravtiwari)
+
 An [Agent Skill](https://code.claude.com/docs/en/skills) that teaches an AI to
 generate WordPress Gutenberg markup with **Kadence Blocks 3.7.10** — heroes,
 feature grids, CTAs, pricing, FAQs, tabs, tables, forms, stats and whole pages.
@@ -188,6 +190,16 @@ and every fixture against an editor running the new version.
 Two things are version-coupled and worth re-checking by hand after an upgrade:
 the six blocks that require `kbVersion:2`, and the tab-anchor rule. Both are
 derived from plugin internals rather than from the manifests.
+
+## Support This Project
+
+Kadence Skills is free to use and teaches an AI agent to write Kadence Blocks 3.7.10 markup for WordPress, from heroes and pricing sections to whole pages. Whenever a new Kadence version ships, I regenerate the schema from its manifests and check every example again in a real block editor.
+
+If the linter caught a missing kbVersion attribute before your Kadence columns stacked on a live page, you can buy me a coffee.
+
+<a href="https://buymeacoffee.com/gauravtiwari"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="50"></a>
+
+I'd appreciate a star on the repo, and if the agent hands you Kadence markup that fails in the editor or renders wrong on the page, you can open an issue with your prompt and the markup it returned.
 
 ## A note on the plugin
 
